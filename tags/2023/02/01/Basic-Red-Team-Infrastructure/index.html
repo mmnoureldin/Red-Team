@@ -6,13 +6,15 @@
   <meta http-equiv="cache-control" content="no-cache">
   <meta http-equiv="expires" content="0">
   
-  <title>Mercury</title>
+  <title>Basic Red Team Infrastructure | Mercury</title>
   <meta name="author" content="Mostafa Noureldin">
+  
+  <meta name="description" content="IntroductionThis post is about how to install a red team basic infrastructure using Apache and C2 framework from BishopFox. It is meant as the kickoff">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  
+  <meta property="og:title" content="Basic Red Team Infrastructure"/>
   <meta property="og:site_name" content="Mercury"/>
 
   
@@ -97,51 +99,29 @@
 
   <div class="container">
   	<div class="content">
-    	 <div class="page-header logo">
-  <h1>Mercury<span class="blink-fast">|</span></h1>
-</div>
+    	 
 
-<div class="row page">
 
 	
+		<div class="page-header">
+			<h1> Basic Red Team Infrastructure</h1>
+		</div>
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
 	<div class="col-md-9">
 	
 
-		<div class="slogan">
+	<!-- content -->
+	<div class="mypage">		
+	  		
 
-
-		<i class="fa fa-bolt blink-slow" style="color:orange"></i>
-
-		Just Spark !
-
-</div>    
-
-		<div id="top_search"></div>
-		<div class="mypage">
-		
-		<!-- title and entry -->
-		
-			
-	
-	<!-- display as entry -->
-<div class="row">
-	<div class="col-md-8">
-		<h3 class="title">
-			<a href="/2023/02/01/Basic-Red-Team-Infrastructure/" >Basic Red Team Infrastructure</a>
-		</h3>
-		</div>
-	<div class="col-md-4">
-		<div class="date">post @ 2023-02-01  </div>
-		</div>
-	</div>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>This post is about how to install a red team basic infrastructure using Apache and C2 framework from BishopFox. It is meant as the kickoff post for a series of tutorial posts on how to red teaming excercises from my experiments.</p>
+	  <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>This post is about how to install a red team basic infrastructure using Apache and C2 framework from BishopFox. It is meant as the kickoff post for a series of tutorial posts on how to red teaming excercises from my experiments.</p>
 <h2 id="Diagram"><a href="#Diagram" class="headerlink" title="Diagram"></a>Diagram</h2><p>Through this post I will use a network setup like the one in the below image.</p>
 <img src="/2023/02/01/Basic-Red-Team-Infrastructure/image-20230131164406408.png" class="">
 
@@ -216,111 +196,106 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">sliver (CLEAR_METHOD) &gt; sessions </span><br><span class="line"></span><br><span class="line"> ID         Name           Transport   Remote Address                              Hostname   Username                     Operating System   Locale   Last Message                               Health </span><br><span class="line">========== ============== =========== =========================================== ========== ============================ ================== ======== ========================================== ========</span><br><span class="line"> 14e3b4ba   CLEAR_METHOD   http(s)     tcp(192.168.24.138:36434)-&gt;192.168.24.135   commando   COMMANDO\Mostafa.Noureldin   windows/amd64      en-US    Sat Jan 28 19:50:03 EST 2023 (7m53s ago)   [DEAD] </span><br><span class="line"></span><br><span class="line">sliver (CLEAR_METHOD) &gt; info</span><br><span class="line"></span><br><span class="line">        Session ID: 3d730b7b-3ab1-41ba-845b-620c4d52588c</span><br><span class="line">              Name: COLOURED_EXIT</span><br><span class="line">          Hostname: commando</span><br><span class="line">              UUID: 96724d56-78cb-ee26-2d12-efbe4931b42d</span><br><span class="line">          Username: COMMANDO\Mostafa.Noureldin</span><br><span class="line">               UID: S-1-5-21-3124759866-2301652251-578080113-1000</span><br><span class="line">               GID: S-1-5-21-3124759866-2301652251-578080113-513</span><br><span class="line">               PID: 6352</span><br><span class="line">                OS: windows</span><br><span class="line">           Version: 10 build 19044 x86_64</span><br><span class="line">            Locale: en-US</span><br><span class="line">              Arch: amd64</span><br><span class="line">         Active C2: https://192.168.24.138</span><br><span class="line">    Remote Address: tcp([::1]:36154)-&gt;192.168.24.135</span><br><span class="line">         Proxy URL: </span><br><span class="line">Reconnect Interval: 1m0s</span><br><span class="line">     First Contact: Mon Jan 30 17:27:53 EST 2023 (26s ago)</span><br><span class="line">      Last Checkin: Mon Jan 30 17:28:14 EST 2023 (5s ago)</span><br></pre></td></tr></table></figure></li>
 </ol>
 
-	
-	</div>
-  <a type="button" href="/2023/02/01/Basic-Red-Team-Infrastructure/#more" class="btn btn-default more">Read More</a>
+	  <div class="article-footer-copyright">
+
 </div>
 
-		
-
-		</div>
-
-		<!-- pagination -->
-		<div>
-  		<center>
-		<div class="pagination">
-
-   
-</div>
-
-  		</center>
-		</div>
-
-		
-		
-	</div> <!-- col-md-9 -->
-
-	
-		<div class="col-md-3">
-	<div id="sidebar">
-	
-			
-  <div id="site_search">
-   <div class="form-group">
-    <input type="text" id="local-search-input" name="q" results="0" placeholder="Search" class="st-search-input st-default-search-input form-control"/>
-   </div>  
-  <div id="local-search-result"></div>
-  </div>
-
-
-		
-			
-	<div class="widget">
-		<h4>Categories</h4>
-		<ul class="tag_box inline list-unstyled">
-		
-			<li><a href="/categories/red-team/infrastructure/">infrastructure<span>1</span></a></li>
-		
-			<li><a href="/categories/red-team/">red team<span>1</span></a></li>
-		
-		</ul>
 	</div>
 
-		
-			
-	<div class="widget">
-		<h4>Tag Cloud</h4>
-		<ul class="tag_box inline list-unstyled">		
-		
-			<li><a href="/tags/redirector/">redirector<span>1</span></a></li>
-		
-			<li><a href="/tags/Sliver/">Sliver<span>1</span></a></li>
-		
-			<li><a href="/tags/team-server/">team server<span>1</span></a></li>
-		
-			<li><a href="/tags/ssh-tunnel/">ssh tunnel<span>1</span></a></li>
-		
-			<li><a href="/tags/c2/">c2<span>1</span></a></li>
-		
-			<li><a href="/tags/apache/">apache<span>1</span></a></li>
-		
-		 
-		</ul>
-	</div>
+	
+	
+	<div>
+  	<center>
 
+	<div class="pagination">
 
-		
-			
-<div class="widget">
-  <h4>Recent Posts</h4>
-  <ul class="entry list-unstyled">
     
-      <li>
-        <a href="/2023/02/01/Basic-Red-Team-Infrastructure/" ><i class="fa fa-file-o"></i>Basic Red Team Infrastructure</a>
-      </li>
+</div>
+
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	<!--
+<section id="comment">
+    <h2 class="title">Comments</h2>
+
     
-  </ul>
-</div>
+</section>
+
+-->
+	
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+
+
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2023-02-01 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/red-team/">red team<span>1</span></a></li> <li><a href="/categories/red-team/infrastructure/">infrastructure<span>1</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Sliver/">Sliver<span>1</span></a></li> <li><a href="/tags/c2/">c2<span>1</span></a></li> <li><a href="/tags/team-server/">team server<span>1</span></a></li> <li><a href="/tags/apache/">apache<span>1</span></a></li> <li><a href="/tags/redirector/">redirector<span>1</span></a></li> <li><a href="/tags/ssh-tunnel/">ssh tunnel<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+		   <span class="toc-title">Contents</span>
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Introduction"><span class="toc-article-text">Introduction</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Diagram"><span class="toc-article-text">Diagram</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Setup-Apache-Redirector"><span class="toc-article-text">Setup Apache Redirector</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#SSH-tunnel-from-C2-server-to-redirector-machine"><span class="toc-article-text">SSH tunnel from C2 server to redirector machine.</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Team-Server-Sliver-C2"><span class="toc-article-text">Team Server - Sliver C2</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Getting-Shell"><span class="toc-article-text">Getting Shell</span></a></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
 
 		
-			
-<div class="widget">
-	<h4>Links</h4>
-	<ul class="blogroll list-unstyled">
-	
-		<li><i class="false"></i><a href="https://github.com/mmnoureldin" title="" target="_blank"]);">mnoureldin github.</a></li>
-	
-	</ul>
-</div>
 
-
+	</div>
+	
 		
-	</div> <!-- sidebar -->
-</div> <!-- col-md-3 -->
 
-	
-	
-</div> <!-- row-fluid -->
+</div><!-- row -->
+
+<!--
+ -->
+
+
+
 	</div>
   </div>
   <div class="container-narrow">
