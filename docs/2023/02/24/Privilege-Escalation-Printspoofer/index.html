@@ -6,13 +6,16 @@
   <meta http-equiv="cache-control" content="no-cache">
   <meta http-equiv="expires" content="0">
   
-  <title>Red Mercury</title>
+  <title>Privilege Escalation - Printspoofer | Red Mercury</title>
   <meta name="author" content="Mostafa Noureldin">
+  
+  <meta name="description" content="IntroductionThis post is built on what we have acheieved on our last post Gaining Initial Foothold.
+We will be able to spoof a printer named pipe to e">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  
+  <meta property="og:title" content="Privilege Escalation - Printspoofer"/>
   <meta property="og:site_name" content="Red Mercury"/>
 
   
@@ -97,51 +100,29 @@
 
   <div class="container">
   	<div class="content">
-    	 <div class="page-header logo">
-  <h1>Red Mercury<span class="blink-fast">|</span></h1>
-</div>
+    	 
 
-<div class="row page">
 
 	
+		<div class="page-header">
+			<h1> Privilege Escalation - Printspoofer</h1>
+		</div>
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
 	<div class="col-md-9">
 	
 
-		<div class="slogan">
+	<!-- content -->
+	<div class="mypage">		
+	  		
 
-
-		<i class="fa fa-bolt blink-slow" style="color:orange"></i>
-
-		Just Spark !
-
-</div>    
-
-		<div id="top_search"></div>
-		<div class="mypage">
-		
-		<!-- title and entry -->
-		
-			
-	
-	<!-- display as entry -->
-<div class="row">
-	<div class="col-md-8">
-		<h3 class="title">
-			<a href="https://mmnoureldin.github.io/Red-Team/2023/02/24/Privilege-Escalation-Printspoofer/" >Privilege Escalation - Printspoofer</a>
-		</h3>
-		</div>
-	<div class="col-md-4">
-		<div class="date">post @ 2023-02-24  </div>
-		</div>
-	</div>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>This post is built on what we have acheieved on our last post <a href="https://mmnoureldin.github.io/Red-Team/2023/02/13/Gaining-Initial-Foothold/" title="Gaining Initial Foothold">Gaining Initial Foothold</a>.</p>
+	  <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>This post is built on what we have acheieved on our last post <a href="https://mmnoureldin.github.io/Red-Team/2023/02/13/Gaining-Initial-Foothold/" title="Gaining Initial Foothold">Gaining Initial Foothold</a>.</p>
 <p>We will be able to spoof a printer named pipe to escalate our privileges to system user.</p>
 <h2 id="Migration"><a href="#Migration" class="headerlink" title="Migration"></a>Migration</h2><p>After gaining the intial access on the target, we had to migrate to some stable proccess other than our <code>W3wp.exe</code> one, this should be done by selecting an appropriate process from the target I cooshed <code>explorer.exe</code>.</p>
 <p>I’m using <a href="https://github.com/mmnoureldin/ExecSploit" title="" target="">ExecSploit</a> a tool that I wrote as a wrapper for <code>SharpSploit</code> to create the <code>explorer.exe</code> process.</p>
@@ -190,212 +171,117 @@
 
 <p>It can be seen that the <code>w3wp.exe</code> process created notepad.exe as remote injection target, then a <code>CreateRemoteThread</code> API was called to inject shellcode in it. These notepad events should be results of <code>execute-assembly</code> command which injected into remote processes in our case.</p>
 
-	
-	</div>
-  <a type="button" href="https://mmnoureldin.github.io/Red-Team/2023/02/24/Privilege-Escalation-Printspoofer/#more" class="btn btn-default more">Read More</a>
+	  <div class="article-footer-copyright">
+
 </div>
 
-		
-			
-	
-	<!-- display as entry -->
-<div class="row">
-	<div class="col-md-8">
-		<h3 class="title">
-			<a href="https://mmnoureldin.github.io/Red-Team/2023/02/13/Gaining-Initial-Foothold/" >Gaining Initial Foothold</a>
-		</h3>
-		</div>
-	<div class="col-md-4">
-		<div class="date">post @ 2023-02-13  </div>
-		</div>
-	</div>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>In this post we are building on the previous post <a href="https://mmnoureldin.github.io/Red-Team/2023/02/01/Basic-Red-Team-Infrastructure/" title="Basic Red Team Infrastructure">Basic Red Team Infrastructure</a>. We are targeting initial access through an exposed file upload form.</p>
-<h2 id="Diagram"><a href="#Diagram" class="headerlink" title="Diagram"></a>Diagram</h2><img src="https://mmnoureldin.github.io/Red-Team/2023/02/13/Gaining-Initial-Foothold/Initial_access.png" class="">
-
-
-<h2 id="Players"><a href="#Players" class="headerlink" title="Players"></a>Players</h2><ul>
-<li>Attacker machine: 192.168.25.128</li>
-<li>Redirector machine: 192.168.25.138</li>
-<li>Firewall: 192.168.24.138</li>
-<li>Vicitm: <a href="https://github.com/Orange-Cyberdefense/GOAD" title="" target="">GOAD Castelblack</a>.</li>
-</ul>
-	
-	</div>
-  <a type="button" href="https://mmnoureldin.github.io/Red-Team/2023/02/13/Gaining-Initial-Foothold/#more" class="btn btn-default more">Read More</a>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->
-<div class="row">
-	<div class="col-md-8">
-		<h3 class="title">
-			<a href="https://mmnoureldin.github.io/Red-Team/2023/02/01/Basic-Red-Team-Infrastructure/" >Basic Red Team Infrastructure</a>
-		</h3>
-		</div>
-	<div class="col-md-4">
-		<div class="date">post @ 2023-02-01  </div>
-		</div>
-	</div>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>This post is about how to install a red team basic infrastructure using Apache web server and Sliver C2 framework from BishopFox. It is meant as the kickoff post for a series of tutorial posts on how to perform red teaming excercises from my experiments.</p>
-<h2 id="Diagram"><a href="#Diagram" class="headerlink" title="Diagram"></a>Diagram</h2><p>Through this post I will use a network setup like the one in the below image.</p>
-<img src="https://mmnoureldin.github.io/Red-Team/2023/02/01/Basic-Red-Team-Infrastructure/image-20230131164406408.png" class="">
-
-<h2 id="Setup-Apache-Redirector"><a href="#Setup-Apache-Redirector" class="headerlink" title="Setup Apache Redirector"></a>Setup Apache Redirector</h2><p>Redirectors are used as a protection for team server, it shouldn’t reach team server directly in anyway. Traffic from victim corporate should land on the redirector then, redirector will decided how to forward it as per the configured rules.</p>
-	
-	</div>
-  <a type="button" href="https://mmnoureldin.github.io/Red-Team/2023/02/01/Basic-Red-Team-Infrastructure/#more" class="btn btn-default more">Read More</a>
-</div>
-
-		
-
-		</div>
-
-		<!-- pagination -->
-		<div>
-  		<center>
-		<div class="pagination">
-
-   
-</div>
-
-  		</center>
-		</div>
-
-		
-		
-	</div> <!-- col-md-9 -->
-
-	
-		<div class="col-md-3">
-	<div id="sidebar">
-	
-			
-  <div id="site_search">
-   <div class="form-group">
-    <input type="text" id="local-search-input" name="q" results="0" placeholder="Search" class="st-search-input st-default-search-input form-control"/>
-   </div>  
-  <div id="local-search-result"></div>
-  </div>
-
-
-		
-			
-	<div class="widget">
-		<h4>Categories</h4>
-		<ul class="tag_box inline list-unstyled">
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/categories/red-team/infrastructure/">infrastructure<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/categories/red-team/intial-access/">intial access<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/categories/red-team/privilege-escalation/">privilege escalation<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/categories/red-team/">red team<span>3</span></a></li>
-		
-		</ul>
 	</div>
 
-		
-			
-	<div class="widget">
-		<h4>Tag Cloud</h4>
-		<ul class="tag_box inline list-unstyled">		
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1190/">T1190<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/aspx/">aspx<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/ssh-tunnel/">ssh tunnel<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/named-pipe/">named pipe<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/team-server/">team server<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1134/">T1134<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/AV/">AV<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/Print-Spoofer/">Print Spoofer<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/Spool-sample/">Spool sample<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1055/">T1055<span>2</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/apache/">apache<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/file-upload/">file upload<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1003-001/">T1003.001<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/c2/">c2<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/windows-defender/">windows defender<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/Sliver/">Sliver<span>2</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/redirector/">redirector<span>1</span></a></li>
-		
-		 
-		</ul>
-	</div>
+	
+	
+	<div>
+  	<center>
 
+	<div class="pagination">
 
-		
-			
-<div class="widget">
-  <h4>Recent Posts</h4>
-  <ul class="entry list-unstyled">
     
-      <li>
-        <a href="https://mmnoureldin.github.io/Red-Team/2023/02/24/Privilege-Escalation-Printspoofer/" ><i class="fa fa-file-o"></i>Privilege Escalation - Prin...</a>
-      </li>
     
-      <li>
-        <a href="https://mmnoureldin.github.io/Red-Team/2023/02/13/Gaining-Initial-Foothold/" ><i class="fa fa-file-o"></i>Gaining Initial Foothold</a>
-      </li>
+    <a type="button" class="btn btn-default disabled"><i class="fa fa-arrow-circle-o-left"></i>Prev</a>
     
-      <li>
-        <a href="https://mmnoureldin.github.io/Red-Team/2023/02/01/Basic-Red-Team-Infrastructure/" ><i class="fa fa-file-o"></i>Basic Red Team Infrastructure</a>
-      </li>
-    
-  </ul>
-</div>
 
-		
-			
-<div class="widget">
-	<h4>Links</h4>
-	<ul class="blogroll list-unstyled">
-	
-		<li><i class="false"></i><a href="https://github.com/mmnoureldin" title="" target="_blank"]);">mnoureldin github.</a></li>
-	
-	</ul>
+    <a href="https://mmnoureldin.github.io/Red-Team/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
+    
+    <a href="https://mmnoureldin.github.io/Red-Team/2023/02/13/Gaining-Initial-Foothold/" type="button" class="btn btn-default ">Next<i
+                class="fa fa-arrow-circle-o-right"></i></a>
+    
+
+    
 </div>
 
 
-		
-	</div> <!-- sidebar -->
-</div> <!-- col-md-3 -->
+    </center>
+	</div>
+	
+	<!-- comment -->
+	<!--
+<section id="comment">
+    <h2 class="title">Comments</h2>
+
+    
+</section>
+
+-->
+	
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+
 
 	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
 	
-</div> <!-- row-fluid -->
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2023-02-24 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="https://mmnoureldin.github.io/Red-Team/categories/red-team/">red team<span>3</span></a></li> <li><a href="https://mmnoureldin.github.io/Red-Team/categories/red-team/privilege-escalation/">privilege escalation<span>1</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1055/">T1055<span>2</span></a></li> <li><a href="https://mmnoureldin.github.io/Red-Team/tags/Print-Spoofer/">Print Spoofer<span>1</span></a></li> <li><a href="https://mmnoureldin.github.io/Red-Team/tags/Spool-sample/">Spool sample<span>1</span></a></li> <li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1134/">T1134<span>1</span></a></li> <li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1003-001/">T1003.001<span>1</span></a></li> <li><a href="https://mmnoureldin.github.io/Red-Team/tags/named-pipe/">named pipe<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+		   <span class="toc-title">Contents</span>
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Introduction"><span class="toc-article-text">Introduction</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Migration"><span class="toc-article-text">Migration</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Situational-Awareness"><span class="toc-article-text">Situational Awareness</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Exploitation"><span class="toc-article-text">Exploitation</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Maintaining-Access"><span class="toc-article-text">Maintaining Access</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Observation"><span class="toc-article-text">Observation</span></a></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+		
+
+	</div>
+	
+		
+
+</div><!-- row -->
+
+<!--
+ -->
+
+
+
 	</div>
   </div>
   <div class="container-narrow">

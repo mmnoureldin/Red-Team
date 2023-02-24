@@ -195,6 +195,15 @@ Vicitm: GOAD Castelblack.">
 <li><p>In the next post we will try to escalate our privilege to a higher user on the system.</p>
 </li>
 </ol>
+<h2 id="Observations"><a href="#Observations" class="headerlink" title="Observations"></a>Observations</h2><p>By checking the target logs, we are actually expecting something that refers to the file eupload and compilation of our .Net reverse shell.</p>
+<p>I’m using Elastic stack for logs inspection.</p>
+<img src="https://mmnoureldin.github.io/Red-Team/2023/02/13/Gaining-Initial-Foothold/image-20230223172811109.png" class="">
+
+
+<p>The main actions of interest are “File Created” and “Process Create”, these refers to the file upload, file compilation, result save.</p>
+<p>The process tree indicates that the IIS proces <code>w3wp.exe</code> is the root for these actions, it fired <code>csc.exe</code> to compile the uploaded ASPX file, and <code>csc.exe</code> in turn calls <code>VBCSCompiler.exe</code> to accomplish that.</p>
+<p>It is worth mentioning that we are injecting into the same process <code>w3wp.exe</code>, so there are no other process created, but we may have to migrate to a more stable process other than this one.</p>
+<img src="https://mmnoureldin.github.io/Red-Team/2023/02/13/Gaining-Initial-Foothold/image-20230223174155794.png" class="">
 
 	  <div class="article-footer-copyright">
 
@@ -211,7 +220,8 @@ Vicitm: GOAD Castelblack.">
 
     
     
-    <a type="button" class="btn btn-default disabled"><i class="fa fa-arrow-circle-o-left"></i>Prev</a>
+    <a href="https://mmnoureldin.github.io/Red-Team/2023/02/24/Privilege-Escalation-Printspoofer/" type="button" class="btn btn-default"><i
+                class="fa fa-arrow-circle-o-left"></i> Prev</a>
     
 
     <a href="https://mmnoureldin.github.io/Red-Team/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
@@ -261,7 +271,7 @@ Vicitm: GOAD Castelblack.">
     <ul id="categorys" class="tag_box list-unstyled collapse in">
           
   <li>
-    <li><a href="https://mmnoureldin.github.io/Red-Team/categories/red-team/">red team<span>2</span></a></li> <li><a href="https://mmnoureldin.github.io/Red-Team/categories/red-team/intial-access/">intial access<span>1</span></a></li>
+    <li><a href="https://mmnoureldin.github.io/Red-Team/categories/red-team/">red team<span>3</span></a></li> <li><a href="https://mmnoureldin.github.io/Red-Team/categories/red-team/intial-access/">intial access<span>1</span></a></li>
   </li>
 
     </ul>
@@ -274,7 +284,7 @@ Vicitm: GOAD Castelblack.">
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="https://mmnoureldin.github.io/Red-Team/tags/Sliver/">Sliver<span>2</span></a></li> <li><a href="https://mmnoureldin.github.io/Red-Team/tags/file-upload/">file upload<span>1</span></a></li> <li><a href="https://mmnoureldin.github.io/Red-Team/tags/aspx/">aspx<span>1</span></a></li> <li><a href="https://mmnoureldin.github.io/Red-Team/tags/windows-defender/">windows defender<span>1</span></a></li> <li><a href="https://mmnoureldin.github.io/Red-Team/tags/AV/">AV<span>1</span></a></li>
+  <li><a href="https://mmnoureldin.github.io/Red-Team/tags/Sliver/">Sliver<span>2</span></a></li> <li><a href="https://mmnoureldin.github.io/Red-Team/tags/file-upload/">file upload<span>1</span></a></li> <li><a href="https://mmnoureldin.github.io/Red-Team/tags/aspx/">aspx<span>1</span></a></li> <li><a href="https://mmnoureldin.github.io/Red-Team/tags/windows-defender/">windows defender<span>1</span></a></li> <li><a href="https://mmnoureldin.github.io/Red-Team/tags/AV/">AV<span>1</span></a></li> <li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1190/">T1190<span>1</span></a></li> <li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1055/">T1055<span>2</span></a></li>
     </ul>
 	</div>
 		
@@ -285,7 +295,7 @@ Vicitm: GOAD Castelblack.">
 	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
 	   <div id="toc" class="toc collapse in">
 		   <span class="toc-title">Contents</span>
-			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Introduction"><span class="toc-article-text">Introduction</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Diagram"><span class="toc-article-text">Diagram</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Players"><span class="toc-article-text">Players</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Setup-firewall-rules"><span class="toc-article-text">Setup firewall rules</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Exploitation"><span class="toc-article-text">Exploitation</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Scanning"><span class="toc-article-text">Scanning</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#RCE-through-file-upload"><span class="toc-article-text">RCE through file upload</span></a></li></ol></li></ol>
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Introduction"><span class="toc-article-text">Introduction</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Diagram"><span class="toc-article-text">Diagram</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Players"><span class="toc-article-text">Players</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Setup-firewall-rules"><span class="toc-article-text">Setup firewall rules</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Exploitation"><span class="toc-article-text">Exploitation</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Scanning"><span class="toc-article-text">Scanning</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#RCE-through-file-upload"><span class="toc-article-text">RCE through file upload</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Observations"><span class="toc-article-text">Observations</span></a></li></ol>
 		</div>
 	
 	</div>
