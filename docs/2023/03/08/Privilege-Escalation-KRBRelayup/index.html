@@ -6,16 +6,17 @@
   <meta http-equiv="cache-control" content="no-cache">
   <meta http-equiv="expires" content="0">
   
-  <title>2.b Privilege Escalation - KRBRelayup | Red Mercury</title>
+  <title>2.b Privilege Escalation - KrbRelayUp | Red Mercury</title>
   <meta name="author" content="Mostafa Noureldin">
   
   <meta name="description" content="IntroductionThis post is built on what we have acheieved on our last post 1. Gaining Initial Foothold.
-In this post we will create a machine account then relay kerberos authentication over LDAP to a domain controller where signing is disabled to add the newly created machine account to the msDS-AllowedToActOnBehalfOfOtherIdentity attribute of our local machine, then perform the resource based constrined delegation attack where we will be able to gain a system level access."> 
+In this post we will create a machine account then relay kerberos authentication over LDAP to a domain controller where signing is disabled to add the newly created machine account to the msDS-AllowedToActOnBehalfOfOtherIdentity attribute of our local machine, then perform the resource based constrined delegation attack where we will be able to gain a system level access.
+Fortunately, we will not perform this manually, the tool of trade to automate this exploitation is KrbRelayUp."> 
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="2.b Privilege Escalation - KRBRelayup"/>
+  <meta property="og:title" content="2.b Privilege Escalation - KrbRelayUp"/>
   <meta property="og:site_name" content="Red Mercury"/>
 
   
@@ -105,7 +106,7 @@ In this post we will create a machine account then relay kerberos authentication
 
 	
 		<div class="page-header">
-			<h1> 2.b Privilege Escalation - KRBRelayup</h1>
+			<h1> 2.b Privilege Escalation - KrbRelayUp</h1>
 		</div>
 	
 
@@ -124,6 +125,7 @@ In this post we will create a machine account then relay kerberos authentication
 
 	  <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>This post is built on what we have acheieved on our last post <a href="https://mmnoureldin.github.io/Red-Team/2023/02/13/Gaining-Initial-Foothold/" title="1. Gaining Initial Foothold">1. Gaining Initial Foothold</a>.</p>
 <p>In this post we will create a machine account then relay kerberos authentication over LDAP to a domain controller where signing is disabled to add the newly created machine account to the <code>msDS-AllowedToActOnBehalfOfOtherIdentity</code> attribute of our local machine, then perform the resource based constrined delegation attack where we will be able to gain a system level access.</p>
+<p>Fortunately, we will not perform this manually, the tool of trade to automate this exploitation is <a href="https://github.com/Dec0ne/KrbRelayUp" title="" target="">KrbRelayUp</a>.</p>
 <img src="https://mmnoureldin.github.io/Red-Team/2023/03/08/Privilege-Escalation-KRBRelayup/mindmap_krbrelay.png" class="">
 
 <span id="more"></span>
