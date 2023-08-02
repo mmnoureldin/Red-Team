@@ -141,10 +141,10 @@
   <div class="row">
 	
 	
-		<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><img src="https://mmnoureldin.github.io/Red-Team/2023/08/02/Domain-Escalation-PrintNightmare/printnightmare.png" class="">
-
-<p>Enabling remote printing and driver installation, entrusts IT admins with SeLoadDriverPrivilege to install new printer drivers to a remote print spooler. </p>
+		<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Enabling remote printing and driver installation, entrusts IT admins with SeLoadDriverPrivilege to install new printer drivers to a remote print spooler. </p>
 <p>At the end, this turned to be an exploit because it was discovered that any “authenticated” user, not just the trusted, permitted sysadmins, can add any ‘Print Driver’ to Windows and escalate this privilege to become a domain admin.</p>
+<img src="https://mmnoureldin.github.io/Red-Team/2023/08/02/Domain-Escalation-PrintNightmare/printnightmare.png" class="">
+
 <h2 id="Exploitation"><a href="#Exploitation" class="headerlink" title="Exploitation"></a>Exploitation</h2><a href="https://github.com/cube0x0/CVE-2021-1675/tree/main/SharpPrintNightmare" title="" target="">SharpPrintNightmare</a>  will be used as the tool of trade in this post.
 
 <p>Moreover, this will be build on the same lab infrastructre from previous posts, where an initial access has been gained on a vicitm machine and some users credentials have been compromised.</p>
@@ -174,10 +174,10 @@
   <div class="row">
 	
 	
-		<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><img src="https://mmnoureldin.github.io/Red-Team/2023/05/01/Domain-Escalation-Zerologon/zerologon.png" class="">
-
-<p>Due to the flawed implementation of the cryptographic authentication scheme used by Netlogon Remote Protocol (MS-NRPC) that causes authentication to be bypassed, attackers can reset the domain controller machine password.</p>
+		<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Due to the flawed implementation of the cryptographic authentication scheme used by Netlogon Remote Protocol (MS-NRPC) that causes authentication to be bypassed, attackers can reset the domain controller machine password.</p>
 <p>This vulnerability has been assigned CVE-2020-1472.</p>
+<img src="https://mmnoureldin.github.io/Red-Team/2023/05/01/Domain-Escalation-Zerologon/zerologon.png" class="">
+
 <h2 id="Exploitation"><a href="#Exploitation" class="headerlink" title="Exploitation"></a>Exploitation</h2><p>We will use <a href="https://github.com/leitosama/SharpZeroLogon" title="" target="">sharpzerologon</a> as the tool of trade in our scenario.</p>
 <p>THe domain controller hostname is <code>winterfell</code>.</p>
 	
@@ -428,45 +428,45 @@
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/bruteforce/">bruteforce<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/redirector/">redirector<span>1</span></a></li>
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/sharpkatz/">sharpkatz<span>1</span></a></li>
 		
 			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1558-004/">T1558.004<span>1</span></a></li>
 		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/Rubeus/">Rubeus<span>1</span></a></li>
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1055/">T1055<span>3</span></a></li>
 		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1068/">T1068<span>1</span></a></li>
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1548/">T1548<span>1</span></a></li>
 		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/Spool-sample/">Spool sample<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/crackmapexec/">crackmapexec<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/c2/">c2<span>1</span></a></li>
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/bruteforce/">bruteforce<span>1</span></a></li>
 		
 			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/ssh-tunnel/">ssh tunnel<span>1</span></a></li>
 		
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/Rubeus/">Rubeus<span>1</span></a></li>
+		
 			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/Delegations/">Delegations<span>1</span></a></li>
 		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/kerberos-relay/">kerberos relay<span>1</span></a></li>
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/team-server/">team server<span>1</span></a></li>
 		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/file-upload/">file upload<span>1</span></a></li>
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1134/">T1134<span>2</span></a></li>
 		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/Print-Spoofer/">Print Spoofer<span>1</span></a></li>
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/metasploit/">metasploit<span>1</span></a></li>
 		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1558/">T1558<span>1</span></a></li>
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/Sliver/">Sliver<span>3</span></a></li>
 		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1552/">T1552<span>1</span></a></li>
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/Kerberoasting/">Kerberoasting<span>1</span></a></li>
 		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1569-002/">T1569.002<span>1</span></a></li>
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1574-002/">T1574.002<span>1</span></a></li>
 		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/RBCD/">RBCD<span>1</span></a></li>
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/Spool-sample/">Spool sample<span>1</span></a></li>
+		
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/windows-defender/">windows defender<span>1</span></a></li>
+		
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1190/">T1190<span>1</span></a></li>
+		
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/apache/">apache<span>1</span></a></li>
+		
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/named-pipe/">named pipe<span>2</span></a></li>
 		
 			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/mshta/">mshta<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1078-002/">T1078.002<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/TA0004/">TA0004<span>1</span></a></li>
 		
 		
 		   <li><a href="/tags">...<span>44</span></a></li>

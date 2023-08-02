@@ -9,10 +9,10 @@
   <title>4.a Domain Escalation - Zerologon | Red Mercury</title>
   <meta name="author" content="Mostafa Noureldin">
   
-  <meta name="description" content="Introduction
-
-Due to the flawed implementation of the cryptographic authentication scheme used by Netlogon Remote Protocol (MS-NRPC) that causes authentication to be bypassed, attackers can reset the domain controller machine password.
+  <meta name="description" content="IntroductionDue to the flawed implementation of the cryptographic authentication scheme used by Netlogon Remote Protocol (MS-NRPC) that causes authentication to be bypassed, attackers can reset the domain controller machine password.
 This vulnerability has been assigned CVE-2020-1472.
+
+
 ExploitationWe will use sharpzerologon as the tool of trade in our scenario.
 THe domain controller hostname is winterfell."> 
   
@@ -126,10 +126,10 @@ THe domain controller hostname is winterfell.">
 	<div class="mypage">		
 	  		
 
-	  <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><img src="https://mmnoureldin.github.io/Red-Team/2023/05/01/Domain-Escalation-Zerologon/zerologon.png" class="">
-
-<p>Due to the flawed implementation of the cryptographic authentication scheme used by Netlogon Remote Protocol (MS-NRPC) that causes authentication to be bypassed, attackers can reset the domain controller machine password.</p>
+	  <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Due to the flawed implementation of the cryptographic authentication scheme used by Netlogon Remote Protocol (MS-NRPC) that causes authentication to be bypassed, attackers can reset the domain controller machine password.</p>
 <p>This vulnerability has been assigned CVE-2020-1472.</p>
+<img src="https://mmnoureldin.github.io/Red-Team/2023/05/01/Domain-Escalation-Zerologon/zerologon.png" class="">
+
 <h2 id="Exploitation"><a href="#Exploitation" class="headerlink" title="Exploitation"></a>Exploitation</h2><p>We will use <a href="https://github.com/leitosama/SharpZeroLogon" title="" target="">sharpzerologon</a> as the tool of trade in our scenario.</p>
 <p>THe domain controller hostname is <code>winterfell</code>.</p>
 <span id="more"></span>
