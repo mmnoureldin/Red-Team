@@ -1,6 +1,7 @@
 .container-narrow {
     margin: 0 auto;
-    max-width: 970px
+    /*max-width: 970px*/
+    max-width: auto;
 }
 
 .container-narrow>footer {
