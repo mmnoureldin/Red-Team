@@ -9,7 +9,14 @@
   <title>4.a Domain Escalation - Zerologon | Red Mercury</title>
   <meta name="author" content="Mostafa Noureldin">
   
-  <meta name="description" content="IntroductionDue to the flawed implementation of the cryptographic authentication scheme used by Netlogon Remote Protocol (MS-NRPC) that causes authentication to be bypassed, attackers can reset the domain controller machine password.
+  <meta name="description" content="Players
+Domain Controller: 192.168.25.11,  winterfell..north.sevenkingdoms.com**
+Initial Foothold: 192.168.25.22, castelblack.north.sevenkingdoms.com
+Attacker machine: 192.168.25.128
+Redirector machine: 192.168.25.138
+Firewall: 192.168.24.138
+
+IntroductionDue to the flawed implementation of the cryptographic authentication scheme used by Netlogon Remote Protocol (MS-NRPC) that causes authentication to be bypassed, attackers can reset the domain controller machine password.
 This vulnerability has been assigned CVE-2020-1472.
 
 
@@ -126,7 +133,14 @@ THe domain controller hostname is winterfell.">
 	<div class="mypage">		
 	  		
 
-	  <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Due to the flawed implementation of the cryptographic authentication scheme used by Netlogon Remote Protocol (MS-NRPC) that causes authentication to be bypassed, attackers can reset the domain controller machine password.</p>
+	  <h2 id="Players"><a href="#Players" class="headerlink" title="Players"></a>Players</h2><ul>
+<li><strong>Domain Controller</strong>: 192.168.25.11,  winterfell..north.sevenkingdoms.com**</li>
+<li><strong>Initial Foothold</strong>: 192.168.25.22, castelblack.north.sevenkingdoms.com</li>
+<li><strong>Attacker machine</strong>: 192.168.25.128</li>
+<li><strong>Redirector machine</strong>: 192.168.25.138</li>
+<li><strong>Firewall</strong>: 192.168.24.138</li>
+</ul>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Due to the flawed implementation of the cryptographic authentication scheme used by Netlogon Remote Protocol (MS-NRPC) that causes authentication to be bypassed, attackers can reset the domain controller machine password.</p>
 <p>This vulnerability has been assigned CVE-2020-1472.</p>
 <img src="https://mmnoureldin.github.io/Red-Team/2023/05/01/Domain-Escalation-Zerologon/zerologon.png" class="">
 
@@ -216,7 +230,7 @@ THe domain controller hostname is winterfell.">
     <ul id="categorys" class="tag_box list-unstyled collapse in">
           
   <li>
-    <li><a href="https://mmnoureldin.github.io/Red-Team/categories/red-team/">red team<span>8</span></a></li> <li><a href="https://mmnoureldin.github.io/Red-Team/categories/red-team/privilege-escalation/">privilege escalation<span>5</span></a></li>
+    <li><a href="https://mmnoureldin.github.io/Red-Team/categories/red-team/">red team<span>9</span></a></li> <li><a href="https://mmnoureldin.github.io/Red-Team/categories/red-team/privilege-escalation/">privilege escalation<span>6</span></a></li>
   </li>
 
     </ul>
@@ -240,7 +254,7 @@ THe domain controller hostname is winterfell.">
 	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
 	   <div id="toc" class="toc collapse in">
 		   <span class="toc-title">Contents</span>
-			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Introduction"><span class="toc-article-text">Introduction</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Exploitation"><span class="toc-article-text">Exploitation</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Observation"><span class="toc-article-text">Observation</span></a></li></ol>
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Players"><span class="toc-article-text">Players</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Introduction"><span class="toc-article-text">Introduction</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Exploitation"><span class="toc-article-text">Exploitation</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Observation"><span class="toc-article-text">Observation</span></a></li></ol>
 		</div>
 	
 	</div>

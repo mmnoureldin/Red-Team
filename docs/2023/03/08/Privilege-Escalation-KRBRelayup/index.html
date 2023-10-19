@@ -130,6 +130,12 @@ Fortunately, we will not perform this manually, the tool of trade to automate th
 
 <span id="more"></span>
 
+<h2 id="Players"><a href="#Players" class="headerlink" title="Players"></a>Players</h2><ul>
+<li><strong>Initial Foothold</strong>: 192.168.25.22, castelblack.north.sevenkingdoms.com</li>
+<li><strong>Attacker machine</strong>: 192.168.25.128</li>
+<li><strong>Redirector machine</strong>: 192.168.25.138</li>
+<li><strong>Firewall</strong>: 192.168.24.138</li>
+</ul>
 <h2 id="Preqreuists"><a href="#Preqreuists" class="headerlink" title="Preqreuists"></a>Preqreuists</h2><ul>
 <li><p>LDAP signing is off.</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ proxychains -q  crackmapexec  ldap 192.168.24.11 -u hodor -p hodor -d north.sevenkingdoms.local -M ldap-signing</span><br><span class="line">SMB         192.168.24.11   445    WINTERFELL       [*] Windows 10.0 Build 17763 x64 (name:WINTERFELL) (domain:north.sevenkingdoms.local) (signing:True) (SMBv1:False)</span><br><span class="line">LDAP        192.168.24.11   389    WINTERFELL       [+] north.sevenkingdoms.local\hodor:hodor </span><br><span class="line">LDAP-SIG... 192.168.24.11   389    WINTERFELL       LDAP signing is NOT enforced on 192.168.24.11</span><br></pre></td></tr></table></figure>
@@ -246,7 +252,7 @@ Fortunately, we will not perform this manually, the tool of trade to automate th
     <ul id="categorys" class="tag_box list-unstyled collapse in">
           
   <li>
-    <li><a href="https://mmnoureldin.github.io/Red-Team/categories/red-team/">red team<span>8</span></a></li> <li><a href="https://mmnoureldin.github.io/Red-Team/categories/red-team/privilege-escalation/">privilege escalation<span>5</span></a></li>
+    <li><a href="https://mmnoureldin.github.io/Red-Team/categories/red-team/">red team<span>9</span></a></li> <li><a href="https://mmnoureldin.github.io/Red-Team/categories/red-team/privilege-escalation/">privilege escalation<span>6</span></a></li>
   </li>
 
     </ul>
@@ -270,7 +276,7 @@ Fortunately, we will not perform this manually, the tool of trade to automate th
 	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
 	   <div id="toc" class="toc collapse in">
 		   <span class="toc-title">Contents</span>
-			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Introduction"><span class="toc-article-text">Introduction</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Preqreuists"><span class="toc-article-text">Preqreuists</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Exploitation"><span class="toc-article-text">Exploitation</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Observations"><span class="toc-article-text">Observations</span></a></li></ol>
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Introduction"><span class="toc-article-text">Introduction</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Players"><span class="toc-article-text">Players</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Preqreuists"><span class="toc-article-text">Preqreuists</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Exploitation"><span class="toc-article-text">Exploitation</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Observations"><span class="toc-article-text">Observations</span></a></li></ol>
 		</div>
 	
 	</div>

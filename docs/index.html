@@ -112,7 +112,7 @@
 
 		<i class="fa fa-bolt blink-slow" style="color:orange"></i>
 
-		Just Spark !
+		Limitless ...
 
 </div>    
 
@@ -120,6 +120,57 @@
 		<div class="mypage">
 		
 		<!-- title and entry -->
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="https://mmnoureldin.github.io/Red-Team/2023/10/20/Domain-Escalation-samAccountName-Spoofing/" >4.c Domain Escalation - samAccountName Spoofing</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2023-10-20  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Every domain account has a “<em>sAMAccountName</em>“ attribute, with the lack of proper microsoft patches and appropriate permission over a domain object, this could lead to domain escalation from an authenticated user.</p>
+<img src="https://mmnoureldin.github.io/Red-Team/2023/10/20/Domain-Escalation-samAccountName-Spoofing/samAccountName.png" class="">
+
+<h2 id="Requirements"><a href="#Requirements" class="headerlink" title="Requirements"></a>Requirements</h2><ol>
+<li>Domain controller is missing the following security patches:<ol>
+<li>KB5008380.</li>
+<li>KB5008602.</li>
+</ol>
+</li>
+<li>Valid domain credentials.</li>
+<li>Ability to add machine account (quota to be above 0).</li>
+</ol>
+<h2 id="Players"><a href="#Players" class="headerlink" title="Players"></a>Players</h2><ul>
+<li><strong>Domain Controller</strong>: 192.168.25.11,  winterfell..north.sevenkingdoms.com**</li>
+<li><strong>Initial Foothold</strong>: 192.168.25.22, castelblack.north.sevenkingdoms.com</li>
+<li><strong>Attacker machine</strong>: 192.168.25.128</li>
+<li><strong>Redirector machine</strong>: 192.168.25.138</li>
+<li><strong>Firewall</strong>: 192.168.24.138</li>
+</ul>
+<h2 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h2><ul>
+<li><a href="https://github.com/ly4k/Pachine" title="" target="">Pachine</a></li>
+</ul>
+<h2 id="Exploitation"><a href="#Exploitation" class="headerlink" title="Exploitation"></a>Exploitation</h2><ol>
+<li><p>Using our initial foothold on <code>castelblack.north.sevenkingdoms.com</code>, we will runs socks to forward our traffic from kali terminal.</p>
+<img src="https://mmnoureldin.github.io/Red-Team/2023/10/20/Domain-Escalation-samAccountName-Spoofing/image-20231019234736935.png" class="zerologon.png">
+	
+	</div>
+  <a type="button" href="https://mmnoureldin.github.io/Red-Team/2023/10/20/Domain-Escalation-samAccountName-Spoofing/#more" class="btn btn-default more">Read More</a>
+</div>
+
 		
 			
 	
@@ -145,6 +196,14 @@
 <p>At the end, this turned to be an exploit because it was discovered that any “authenticated” user, not just the trusted, permitted sysadmins, can add any ‘Print Driver’ to Windows and escalate this privilege to become a domain admin.</p>
 <img src="https://mmnoureldin.github.io/Red-Team/2023/08/02/Domain-Escalation-PrintNightmare/printnightmare.png" class="">
 
+
+<h2 id="Players"><a href="#Players" class="headerlink" title="Players"></a>Players</h2><ul>
+<li><strong>Domain Controller</strong>: 192.168.25.11,  winterfell..north.sevenkingdoms.com**</li>
+<li><strong>Initial Foothold</strong>: 192.168.25.22, castelblack.north.sevenkingdoms.com</li>
+<li><strong>Attacker machine</strong>: 192.168.25.128</li>
+<li><strong>Redirector machine</strong>: 192.168.25.138</li>
+<li><strong>Firewall</strong>: 192.168.24.138</li>
+</ul>
 <h2 id="Exploitation"><a href="#Exploitation" class="headerlink" title="Exploitation"></a>Exploitation</h2><a href="https://github.com/cube0x0/CVE-2021-1675/tree/main/SharpPrintNightmare" title="" target="">SharpPrintNightmare</a>  will be used as the tool of trade in this post.
 
 <p>Moreover, this will be build on the same lab infrastructre from previous posts, where an initial access has been gained on a vicitm machine and some users credentials have been compromised.</p>
@@ -174,7 +233,14 @@
   <div class="row">
 	
 	
-		<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Due to the flawed implementation of the cryptographic authentication scheme used by Netlogon Remote Protocol (MS-NRPC) that causes authentication to be bypassed, attackers can reset the domain controller machine password.</p>
+		<h2 id="Players"><a href="#Players" class="headerlink" title="Players"></a>Players</h2><ul>
+<li><strong>Domain Controller</strong>: 192.168.25.11,  winterfell..north.sevenkingdoms.com**</li>
+<li><strong>Initial Foothold</strong>: 192.168.25.22, castelblack.north.sevenkingdoms.com</li>
+<li><strong>Attacker machine</strong>: 192.168.25.128</li>
+<li><strong>Redirector machine</strong>: 192.168.25.138</li>
+<li><strong>Firewall</strong>: 192.168.24.138</li>
+</ul>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Due to the flawed implementation of the cryptographic authentication scheme used by Netlogon Remote Protocol (MS-NRPC) that causes authentication to be bypassed, attackers can reset the domain controller machine password.</p>
 <p>This vulnerability has been assigned CVE-2020-1472.</p>
 <img src="https://mmnoureldin.github.io/Red-Team/2023/05/01/Domain-Escalation-Zerologon/zerologon.png" class="">
 
@@ -297,6 +363,12 @@
 	
 		<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>This post is built on what we have acheieved on our last post <a href="https://mmnoureldin.github.io/Red-Team/2023/02/13/Gaining-Initial-Foothold/" title="1. Gaining Initial Foothold">1. Gaining Initial Foothold</a>.</p>
 <p>We will be able to spoof a printer named pipe to escalate our privileges to system user.</p>
+<h2 id="Players"><a href="#Players" class="headerlink" title="Players"></a>Players</h2><ul>
+<li><strong>Initial Foothold</strong>: 192.168.25.22, castelblack.north.sevenkingdoms.com</li>
+<li><strong>Attacker machine</strong>: 192.168.25.128</li>
+<li><strong>Redirector machine</strong>: 192.168.25.138</li>
+<li><strong>Firewall</strong>: 192.168.24.138</li>
+</ul>
 <h2 id="Migration"><a href="#Migration" class="headerlink" title="Migration"></a>Migration</h2><p>After gaining the intial access on the target, we had to migrate to some stable proccess other than our <code>W3wp.exe</code> one, this should be done by selecting an appropriate process from the target I cooshed <code>explorer.exe</code>.</p>
 <p>We can create a new explorer.exe process then we can list the processes to get the newly created process id to use it in the migration.</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">sliver (NORTHERN_CONCRETE) &gt; execute explorer.exe</span><br><span class="line"></span><br><span class="line">[*] Command executed successfully</span><br><span class="line"></span><br><span class="line">sliver (NORTHERN_CONCRETE) &gt; ps</span><br><span class="line"></span><br><span class="line"> Pid    Ppid   Owner                        Arch     Executable          Session </span><br><span class="line">====== ====== ============================ ======== =================== =========</span><br><span class="line"> 0      0                                            [System Process]    -1      </span><br><span class="line"> 4      0                                            System              -1      </span><br><span class="line"> 68     4                                            Registry            -1      </span><br><span class="line"> 496    4                                            smss.exe            -1      </span><br><span class="line"> 604    596                                          csrss.exe           -1      </span><br><span class="line"> 704    696                                          csrss.exe           -1      </span><br><span class="line">     </span><br><span class="line"> 4260   800                                          NisSrv.exe          -1      </span><br><span class="line"> 3796   2580   IIS APPPOOL\DefaultAppPool   x86_64   w3wp.exe            0       </span><br><span class="line"> 1072   800                                          winlogbeat.exe      -1      </span><br><span class="line"> 4820   800                                          WmiApSrv.exe        -1      </span><br><span class="line"> 1004   800                                          svchost.exe         -1      </span><br><span class="line"> 1168   800                                          svchost.exe         -1      </span><br><span class="line"> 3592   800                                          svchost.exe         -1      </span><br><span class="line"> 3356   3796   IIS APPPOOL\DefaultAppPool   x86_64   explorer.exe        0       </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">⚠️  Security Product(s): Sysmon64, Windows Defender</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -331,10 +403,10 @@
 
 
 <h2 id="Players"><a href="#Players" class="headerlink" title="Players"></a>Players</h2><ul>
-<li>Attacker machine: 192.168.25.128</li>
-<li>Redirector machine: 192.168.25.138</li>
-<li>Firewall: 192.168.24.138</li>
-<li>Vicitm: <a href="https://github.com/Orange-Cyberdefense/GOAD" title="" target="">GOAD Castelblack</a>.</li>
+<li><strong>Attacker machine</strong>: 192.168.25.128</li>
+<li><strong>Redirector machine</strong>: 192.168.25.138</li>
+<li><strong>Firewall</strong>: 192.168.24.138</li>
+<li><strong>Vicitm</strong>: <a href="https://github.com/Orange-Cyberdefense/GOAD" title="" target="">GOAD Castelblack</a>.</li>
 </ul>
 	
 	</div>
@@ -415,9 +487,9 @@
 		
 			<li><a href="https://mmnoureldin.github.io/Red-Team/categories/red-team/intial-access/">intial access<span>1</span></a></li>
 		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/categories/red-team/privilege-escalation/">privilege escalation<span>5</span></a></li>
+			<li><a href="https://mmnoureldin.github.io/Red-Team/categories/red-team/privilege-escalation/">privilege escalation<span>6</span></a></li>
 		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/categories/red-team/">red team<span>8</span></a></li>
+			<li><a href="https://mmnoureldin.github.io/Red-Team/categories/red-team/">red team<span>9</span></a></li>
 		
 		</ul>
 	</div>
@@ -428,48 +500,48 @@
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/Sliver/">Sliver<span>3</span></a></li>
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/Kerberoasting/">Kerberoasting<span>1</span></a></li>
 		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1548/">T1548<span>1</span></a></li>
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/krbrelayup/">krbrelayup<span>1</span></a></li>
 		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/crackmapexec/">crackmapexec<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/ssh-tunnel/">ssh tunnel<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/apache/">apache<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/redirector/">redirector<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/bruteforce/">bruteforce<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/lsass/">lsass<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/AV/">AV<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/kerberos-relay/">kerberos relay<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1190/">T1190<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/Rubeus/">Rubeus<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/CVE-2020-1472/">CVE-2020-1472<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/aspx/">aspx<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/Delegations/">Delegations<span>1</span></a></li>
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/hta/">hta<span>1</span></a></li>
 		
 			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/c2/">c2<span>1</span></a></li>
 		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1558-004/">T1558.004<span>1</span></a></li>
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/Sliver/">Sliver<span>3</span></a></li>
+		
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1558-003/">T1558.003<span>1</span></a></li>
+		
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/kerberos-relay/">kerberos relay<span>1</span></a></li>
+		
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1055/">T1055<span>3</span></a></li>
+		
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/lsass/">lsass<span>1</span></a></li>
+		
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/team-server/">team server<span>1</span></a></li>
+		
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/KB5008380/">KB5008380<span>1</span></a></li>
+		
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/named-pipe/">named pipe<span>2</span></a></li>
+		
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/file-upload/">file upload<span>1</span></a></li>
+		
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/metasploit/">metasploit<span>1</span></a></li>
+		
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/sharpkatz/">sharpkatz<span>1</span></a></li>
+		
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/aspx/">aspx<span>1</span></a></li>
+		
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1190/">T1190<span>1</span></a></li>
+		
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1548/">T1548<span>1</span></a></li>
 		
 			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/windows-defender/">windows defender<span>1</span></a></li>
 		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/T1078-002/">T1078.002<span>1</span></a></li>
-		
-			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/TA0004/">TA0004<span>1</span></a></li>
+			<li><a href="https://mmnoureldin.github.io/Red-Team/tags/redirector/">redirector<span>1</span></a></li>
 		
 		
-		   <li><a href="/tags">...<span>44</span></a></li>
+		   <li><a href="/tags">...<span>46</span></a></li>
 		 
 		</ul>
 	</div>
@@ -480,6 +552,10 @@
 <div class="widget">
   <h4>Recent Posts</h4>
   <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="https://mmnoureldin.github.io/Red-Team/2023/10/20/Domain-Escalation-samAccountName-Spoofing/" ><i class="fa fa-file-o"></i>4.c Domain Escalation - sam...</a>
+      </li>
     
       <li>
         <a href="https://mmnoureldin.github.io/Red-Team/2023/08/02/Domain-Escalation-PrintNightmare/" ><i class="fa fa-file-o"></i>4.b Domain Escalation - Pri...</a>
@@ -495,10 +571,6 @@
     
       <li>
         <a href="https://mmnoureldin.github.io/Red-Team/2023/03/09/Privilege-Escalation-Potatoes/" ><i class="fa fa-file-o"></i>2.c Privilege Escalation - ...</a>
-      </li>
-    
-      <li>
-        <a href="https://mmnoureldin.github.io/Red-Team/2023/03/08/Privilege-Escalation-KRBRelayup/" ><i class="fa fa-file-o"></i>2.b Privilege Escalation - ...</a>
       </li>
     
   </ul>
