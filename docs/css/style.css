@@ -1,7 +1,7 @@
 .container-narrow {
     margin: 0 auto;
     /*max-width: 970px*/
-    max-width: 1500px;
+    max-width: auto;
 }
 
 .container-narrow>footer {
@@ -30,7 +30,6 @@ body {
     -webkit-border-radius: 6px 6px 6px 6px;
     -moz-border-radius: 6px 6px 6px 6px;
     border-radius: 6px 6px 6px 6px;
-    max-width: auto;
 }
 
 #sidebar {
